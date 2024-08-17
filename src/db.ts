@@ -7,6 +7,7 @@ import {
 } from "kysely";
 import { createPool } from "mysql2";
 import type { DB } from "./types.js";
+import "dotenv/config";
 
 export class FieldOnlyCamelCasePlugin extends CamelCasePlugin {
 	protected override snakeCase(str: string): string {
@@ -21,10 +22,11 @@ export class FieldOnlyCamelCasePlugin extends CamelCasePlugin {
 const db = new Kysely<DB>({
 	dialect: new MysqlDialect({
 		pool: createPool({
-			host: "localhost",
+			host: process.env.DATABASE_HOST,
 			user: "root",
 			password: "password",
 			database: "corebiz_task_manager",
+			port: 3306,
 		}),
 	}),
 	plugins: [

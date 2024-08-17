@@ -8,7 +8,8 @@ services:
       - db
     environment:
       DATABASE_URL: mysql://root:password@db:3306/corebiz_task_manager
-      ADDRESS: 0.0.0.0
+      DATABASE_HOST: db
+      HOST: 0.0.0.0
 
   db:
     container_name: db 

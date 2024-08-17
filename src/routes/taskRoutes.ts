@@ -3,10 +3,10 @@ import fp from "fastify-plugin";
 import { Type } from "@sinclair/typebox";
 import taskServices from "../services/taskServices.js";
 import {
+	CreateTaskBody,
+	IdSchema,
 	TaskSchema,
-	type CreateTaskBody,
-	type UpdateTaskBody,
-	type IdSchema,
+	UpdateTaskBody,
 	CreateTaskResponse,
 } from "../schemas/schemas.js";
 
@@ -19,6 +19,7 @@ const routes = fp(async (scope: FastifyInstance) => {
 			schema: {
 				tags: ["Tasks"],
 				operationId: "getTasks",
+				description: "Recupera uma lista de todas as tarefas.",
 				response: { "2xx": Type.Array(TaskSchema) },
 			},
 		},
@@ -34,7 +35,9 @@ const routes = fp(async (scope: FastifyInstance) => {
 			schema: {
 				tags: ["Tasks"],
 				operationId: "getTaskById",
+				description: "Recupera uma tarefa específica pelo seu ID.",
 				response: { "2xx": TaskSchema },
+				params: IdSchema,
 			},
 		},
 		async (request: FastifyRequest<{ Params: IdSchema }>) => {
@@ -50,7 +53,9 @@ const routes = fp(async (scope: FastifyInstance) => {
 			schema: {
 				tags: ["Tasks"],
 				operationId: "createTask",
+				description: "Cria uma nova tarefa.",
 				response: { "2xx": CreateTaskResponse },
+				body: CreateTaskBody,
 			},
 		},
 		async (request: FastifyRequest<{ Body: CreateTaskBody }>) => {
@@ -65,7 +70,10 @@ const routes = fp(async (scope: FastifyInstance) => {
 			schema: {
 				tags: ["Tasks"],
 				operationId: "updateTask",
+				description: "Atualiza uma tarefa existente pelo seu ID.",
 				response: { "2xx": Type.Object({ message: Type.String() }) },
+				body: UpdateTaskBody,
+				params: IdSchema,
 			},
 		},
 		async (
@@ -84,7 +92,9 @@ const routes = fp(async (scope: FastifyInstance) => {
 			schema: {
 				tags: ["Tasks"],
 				operationId: "deleteTask",
+				description: "Exclui uma tarefa pelo seu ID (soft delete).",
 				response: { "2xx": Type.Object({ message: Type.String() }) },
+				params: IdSchema,
 			},
 		},
 		async (request: FastifyRequest<{ Params: IdSchema }>) => {

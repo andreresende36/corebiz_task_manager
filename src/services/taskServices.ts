@@ -59,6 +59,12 @@ export default class TaskServices {
 	}
 
 	async updateTask(id: number, dto: UpdateTaskBody) {
+		const validStatuses = ["pendente", "concluido", "em_progresso"];
+		if (dto.status && !validStatuses.includes(dto.status))
+			throw httpErrors.badRequest("Invalid status provided");
+		if (!Object.keys(dto).length) {
+			throw httpErrors.badRequest("No fields to update task provided");
+		}
 		const updatedTask = await db
 			.updateTable("Tasks")
 			.set(dto)
