@@ -1,0 +1,22 @@
+services:
+  app:
+    container_name: app
+    build: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql://root:password@db:3306/corebiz_task_manager
+      ADDRESS: 0.0.0.0
+
+  db:
+    container_name: db 
+    image: mysql:8.0.32
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: corebiz_task_manager
+      MYSQL_HOST: db
+    ports:
+      - 3306:3306
