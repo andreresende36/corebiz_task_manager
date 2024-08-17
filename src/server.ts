@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 import swaggerPlugin from "./plugins/swagger.js";
 import taskRoutes from "./routes/taskRoutes.js";
-// import userRoutes from "./routes/userRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import "dotenv/config";
 
 const server = Fastify({
@@ -10,7 +10,7 @@ const server = Fastify({
 
 server.register(swaggerPlugin);
 server.register(taskRoutes);
-// server.register(userRoutes);
+server.register(userRoutes);
 
 server.get("/", async (_request, _reply) => {
 	return { message: "Seja bem-vindo!" };

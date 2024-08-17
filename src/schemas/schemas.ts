@@ -63,6 +63,18 @@ export const UserSchema = Type.Object({
 	email: Type.String({ format: "email" }),
 });
 
+export type CreateUserBody = Static<typeof CreateUserBody>;
+export const CreateUserBody = Type.Object({
+	name: Type.String(),
+	email: Type.String({ format: "email" }),
+});
+
+export type UpdateUserBody = Static<typeof UpdateUserBody>;
+export const UpdateUserBody = Type.Object({
+	name: Type.Optional(Type.String()),
+	email: Type.Optional(Type.String({ format: "email" })),
+});
+
 export const IdSchema = Type.Object({
 	id: Type.Number(),
 });

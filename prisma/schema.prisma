@@ -29,6 +29,8 @@ model Tasks {
   createdAt   DateTime   @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt   DateTime   @default(now()) @map("updated_at") @db.Timestamp(6)
   deletedAt   DateTime?  @map("deleted_at") @db.Timestamp(6)
+
+  user Users @relation(fields: [userId], references: [id])
 }
 
 model Users {
@@ -38,6 +40,8 @@ model Users {
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime  @default(now()) @map("updated_at") @db.Timestamp(6)
   deletedAt DateTime? @map("deleted_at") @db.Timestamp(6)
+
+  Tasks Tasks[]
 }
 
 enum TaskStatus {

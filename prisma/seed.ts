@@ -20,6 +20,7 @@ const getRandomUserId = () => {
 };
 
 const seed = async () => {
+	await prisma.tasks.deleteMany();
 	await prisma.users.deleteMany();
 
 	// Create 10 Users
