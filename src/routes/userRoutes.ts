@@ -3,10 +3,10 @@ import fp from "fastify-plugin";
 import { Type } from "@sinclair/typebox";
 import UserServices from "../services/userServices.js";
 import {
+	CreateUserBody,
+	IdSchema,
+	UpdateUserBody,
 	UserSchema,
-	type CreateUserBody,
-	type UpdateUserBody,
-	type IdSchema,
 } from "../schemas/schemas.js";
 
 const services = new UserServices();
@@ -18,6 +18,7 @@ const routes = fp(async (scope: FastifyInstance) => {
 			schema: {
 				tags: ["Users"],
 				operationId: "getUsers",
+				description: "Recupera uma lista de todos os usuários.",
 				response: { "2xx": Type.Array(UserSchema) },
 			},
 		},
@@ -33,7 +34,9 @@ const routes = fp(async (scope: FastifyInstance) => {
 			schema: {
 				tags: ["Users"],
 				operationId: "getUserById",
+				description: "Recupera um usuário específico pelo seu ID.",
 				response: { "2xx": UserSchema },
+				params: IdSchema,
 			},
 		},
 		async (request: FastifyRequest<{ Params: IdSchema }>) => {
@@ -49,7 +52,9 @@ const routes = fp(async (scope: FastifyInstance) => {
 			schema: {
 				tags: ["Users"],
 				operationId: "createUser",
+				description: "Cria um novo usuário.",
 				response: { "2xx": UserSchema },
+				body: CreateUserBody,
 			},
 		},
 		async (request: FastifyRequest<{ Body: CreateUserBody }>) => {
@@ -64,7 +69,10 @@ const routes = fp(async (scope: FastifyInstance) => {
 			schema: {
 				tags: ["Users"],
 				operationId: "updateUser",
+				description: "Atualiza um usuário existente pelo seu ID.",
 				response: { "2xx": Type.Object({ message: Type.String() }) },
+				body: UpdateUserBody,
+				params: IdSchema,
 			},
 		},
 		async (
@@ -83,7 +91,9 @@ const routes = fp(async (scope: FastifyInstance) => {
 			schema: {
 				tags: ["Users"],
 				operationId: "deleteUser",
+				description: "Exclui um usuário pelo seu ID (soft delete).",
 				response: { "2xx": Type.Object({ message: Type.String() }) },
+				params: IdSchema,
 			},
 		},
 		async (request: FastifyRequest<{ Params: IdSchema }>) => {

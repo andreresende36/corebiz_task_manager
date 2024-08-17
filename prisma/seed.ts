@@ -24,31 +24,29 @@ const seed = async () => {
 	await prisma.users.deleteMany();
 
 	// Create 10 Users
-	await Promise.all(
-		Array.from({ length: NUMBER_OF_ENTITIES }).map((_, index) =>
-			prisma.users.create({
-				data: {
-					name: `User ${index + 1}`,
-					email: `user${index + 1}@example.com`,
-				},
-			}),
-		),
-	);
+	const users = [];
+	for (let index = 0; index < NUMBER_OF_ENTITIES; index++) {
+		const user = await prisma.users.create({
+			data: {
+				name: `User ${index + 1}`,
+				email: `user${index + 1}@example.com`,
+			},
+		});
+		users.push(user);
+	}
 
 	// Create 10 Tasks
-	await Promise.all(
-		Array.from({ length: NUMBER_OF_ENTITIES }).map((_, index) =>
-			prisma.tasks.create({
-				data: {
-					title: `Task ${index + 1}`,
-					description: `Description for task ${index + 1}`,
-					dueDate: generateRandomDate(),
-					status: getRandomStatus() as TaskStatus,
-					userId: getRandomUserId(),
-				},
-			}),
-		),
-	);
+	for (let index = 0; index < NUMBER_OF_ENTITIES; index++) {
+		await prisma.tasks.create({
+			data: {
+				title: `Task ${index + 1}`,
+				description: `Description for task ${index + 1}`,
+				dueDate: generateRandomDate(),
+				status: getRandomStatus() as TaskStatus,
+				userId: getRandomUserId(),
+			},
+		});
+	}
 
 	console.log("Seed data inserted");
 };
