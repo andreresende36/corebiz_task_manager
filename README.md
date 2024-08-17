@@ -1,3 +1,5 @@
+![logo](https://imgur.com/iwdMBr0.png)
+
 Corebiz Task Manager API
 ========================
 
@@ -46,8 +48,8 @@ Se tudo deu certo, a API já estará rodando e o banco de dados estará populado
 🌐 URLs Importantes
 -------------------
 
-- **URL da API**: `http://localhost:3000`
-- **Documentação API com o Swagger**: `http://localhost:3000/docs`
+- **URL da API**: http://localhost:3000
+- **Documentação API com o Swagger**: http://localhost:3000/docs
 
 📊 Diagrama Entidade-Relacionamento (ERD)
 -----------------------------------------
